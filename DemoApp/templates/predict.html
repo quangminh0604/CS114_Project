@@ -1,0 +1,329 @@
+{% extends "layout.html" %}
+
+{% block title %}Predict Heart Disease Risk - Framingham Heart Disease Risk Prediction{% endblock %}
+
+{% block head_extras %}
+{% if google_maps_api_key %}
+<!-- Pass Google Maps API Key to JavaScript -->
+<script>
+    const googleMapsApiKey = "{{ google_maps_api_key }}";
+</script>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Pastel Gradient -->
+<section class="hero-section" style="min-height: 300px;">
+    <div class="hero-content">
+        <h1 class="hero-title">Heart Disease Risk Assessment</h1>
+        <p class="hero-subtitle">
+            Predict your 10-year risk of heart disease using the Framingham Heart Study model
+        </p>
+    </div>
+</section>
+
+<!-- Prediction Form Section -->
+<section class="container my-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <ul class="nav nav-tabs card-header-tabs" id="predictionTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active text-white" id="individual-tab" data-bs-toggle="tab" href="#individual">Individual Assessment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" id="batch-tab" data-bs-toggle="tab" href="#batch">Batch Processing</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <!-- Individual Assessment Tab -->
+                        <div class="tab-pane fade show active" id="individual">
+                            <h4 class="card-title mb-4">Enter Your Health Information</h4>
+                            <form id="prediction-form">
+                                <div class="row g-3">
+                                    <!-- Algorithm Selection -->
+                                    <div class="col-12 mb-3">
+                                        <label for="algorithm" class="form-label">Select Prediction Algorithm:</label>
+                                        <select class="form-select" id="algorithm" name="algorithm" required>
+                                            {% for key, name in algorithms.items() %}
+                                            <option value="{{ key }}">{{ name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="form-text">Different algorithms may provide slightly different results.</div>
+                                    </div>
+                                    
+                                    <!-- Demographics -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Gender:</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="male" name="male">
+                                            <label class="form-check-label" for="male">Male</label>
+                                            <div class="form-text">Check for male, leave unchecked for female</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="age" class="form-label">Age:</label>
+                                        <input type="number" class="form-control" id="age" name="age" min="18" max="120" required>
+                                    </div>
+                                    
+                                    <!-- Behavioral Factors -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cigsPerDay" class="form-label">Cigarettes Per Day:</label>
+                                        <input type="number" class="form-control" id="cigsPerDay" name="cigsPerDay" min="0" value="0">
+                                        <div class="form-text">Enter 0 if you don't smoke</div>
+                                    </div>
+                                    
+                                    <!-- Medical History -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">On Blood Pressure Medication:</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="BPMeds" name="BPMeds">
+                                            <label class="form-check-label" for="BPMeds">Yes</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Previous Stroke:</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="prevalentStroke" name="prevalentStroke">
+                                            <label class="form-check-label" for="prevalentStroke">Yes</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Hypertension:</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="prevalentHyp" name="prevalentHyp">
+                                            <label class="form-check-label" for="prevalentHyp">Yes</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Diabetes:</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="diabetes" name="diabetes">
+                                            <label class="form-check-label" for="diabetes">Yes</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Health Metrics -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="totChol" class="form-label">Total Cholesterol (mg/dL):</label>
+                                        <input type="number" class="form-control" id="totChol" name="totChol" min="100" max="600" required>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="sysBP" class="form-label">Systolic Blood Pressure (mmHg):</label>
+                                        <input type="number" class="form-control" id="sysBP" name="sysBP" min="70" max="300" required>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="diaBP" class="form-label">Diastolic Blood Pressure (mmHg):</label>
+                                        <input type="number" class="form-control" id="diaBP" name="diaBP" min="40" max="200" required>
+                                    </div>
+                                    
+                                    <!-- BMI Calculator -->
+                                    <div class="col-12 mb-3">
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+                                                <h5 class="card-title">BMI Calculator</h5>
+                                                <div class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <label for="height" class="form-label">Height (cm):</label>
+                                                        <input type="number" class="form-control" id="height" min="50" max="250">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="weight" class="form-label">Weight (kg):</label>
+                                                        <input type="number" class="form-control" id="weight" min="1" max="400">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="BMI" class="form-label">BMI (kg/m²):</label>
+                                        <input type="number" class="form-control" id="BMI" name="BMI" min="10" max="60" required>
+                                        <div class="form-text">Use calculator above or enter manually</div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="heartRate" class="form-label">Heart Rate (bpm):</label>
+                                        <input type="number" class="form-control" id="heartRate" name="heartRate" min="40" max="220" required>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="glucose" class="form-label">Blood Glucose (mg/dL):</label>
+                                        <input type="number" class="form-control" id="glucose" name="glucose" min="40" max="400" required>
+                                    </div>
+                                    
+                                    <!-- Submit Button -->
+                                    <div class="col-12 mt-4">
+                                        <button type="submit" class="btn btn-primary">Calculate Risk</button>
+                                        <div class="loader mt-3">
+                                            <div class="loader-spinner"></div>
+                                            <p class="mt-2">Processing your data...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            <!-- Results Display -->
+                            <div id="result-box" class="result-box mt-5" style="display: none;">
+                                <!-- Results will be dynamically inserted here by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Batch Processing Tab -->
+                        <div class="tab-pane fade" id="batch">
+                            <h4 class="card-title mb-4">Batch Risk Assessment</h4>
+                            <p>Upload a CSV file with multiple patient records to process them all at once.</p>
+                            
+                            <div class="alert alert-info">
+                                <h5 class="alert-heading">CSV Format Requirements</h5>
+                                <p>Your CSV file must include the following column headers:</p>
+                                <code>male, age, cigsPerDay, BPMeds, prevalentStroke, prevalentHyp, diabetes, totChol, sysBP, diaBP, BMI, heartRate, glucose</code>
+                                <p class="mb-0 mt-2">Boolean values (male, BPMeds, prevalentStroke, prevalentHyp, diabetes) should be represented as 1/0, True/False, or Yes/No.</p>
+                            </div>
+                            
+                            <form id="batch-upload-form">
+                                <div class="mb-3">
+                                    <label for="batch-algorithm" class="form-label">Select Prediction Algorithm:</label>
+                                    <select class="form-select" id="batch-algorithm" name="algorithm" required>
+                                        {% for key, name in algorithms.items() %}
+                                        <option value="{{ key }}">{{ name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="csv-file" class="form-label">Upload CSV File:</label>
+                                    <div class="file-upload" onclick="document.getElementById('csv-file').click()">
+                                        <div class="file-upload-icon">
+                                            <i class="fas fa-file-csv"></i>
+                                        </div>
+                                        <p>Click to select a CSV file or drag and drop it here</p>
+                                        <p class="file-name" id="file-name">No file selected</p>
+                                        <input type="file" class="d-none" id="csv-file" name="file" accept=".csv">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary">Process Batch</button>
+                                    <div class="loader mt-3">
+                                        <div class="loader-spinner"></div>
+                                        <p class="mt-2">Processing batch data...</p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Measurement Guidelines Card -->
+            <div class="card mt-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Measurement Guidelines</h5>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="guidelinesAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Blood Pressure Measurement
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#guidelinesAccordion">
+                                <div class="accordion-body">
+                                    <p>For accurate blood pressure measurement:</p>
+                                    <ul>
+                                        <li>Sit quietly for 5 minutes before measurement</li>
+                                        <li>Use a properly calibrated and validated device</li>
+                                        <li>Keep your arm at heart level during measurement</li>
+                                        <li>Take multiple readings and record the average</li>
+                                        <li>Avoid caffeine, exercise, and smoking for 30 minutes before measurement</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Cholesterol Testing
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#guidelinesAccordion">
+                                <div class="accordion-body">
+                                    <p>For cholesterol testing:</p>
+                                    <ul>
+                                        <li>Fast for 9-12 hours before the test (water is permitted)</li>
+                                        <li>Avoid high-fat foods the day before</li>
+                                        <li>Continue taking prescribed medications unless directed otherwise by your doctor</li>
+                                        <li>Total cholesterol values are typically measured in mg/dL (US) or mmol/L (international)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Blood Glucose Testing
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#guidelinesAccordion">
+                                <div class="accordion-body">
+                                    <p>For blood glucose testing:</p>
+                                    <ul>
+                                        <li>For fasting glucose: fast for at least 8 hours</li>
+                                        <li>For random glucose: can be measured at any time</li>
+                                        <li>Normal fasting glucose is typically 70-99 mg/dL</li>
+                                        <li>Normal random glucose is typically less than 140 mg/dL</li>
+                                        <li>Values are typically measured in mg/dL (US) or mmol/L (international)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Heart Rate Measurement
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#guidelinesAccordion">
+                                <div class="accordion-body">
+                                    <p>For heart rate measurement:</p>
+                                    <ul>
+                                        <li>Rest for at least 5-10 minutes before taking your pulse</li>
+                                        <li>Use your index and middle finger to locate your pulse (wrist or neck)</li>
+                                        <li>Count the beats for 30 seconds and multiply by 2</li>
+                                        <li>Normal resting heart rate for adults is typically 60-100 beats per minute</li>
+                                        <li>Athletes and physically active people may have lower resting heart rates</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Clinics Container -->
+<section id="clinics-container" class="container my-5 p-4 bg-light rounded shadow" style="display: none;">
+    <!-- Clinics will be displayed here by JavaScript -->
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/predict.js') }}"></script>
+<script src="{{ url_for('static', filename='js/clinics.js') }}"></script>
+{% endblock %}

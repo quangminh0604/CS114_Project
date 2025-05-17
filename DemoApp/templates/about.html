@@ -1,0 +1,164 @@
+{% extends "layout.html" %}
+
+{% block title %}About Us - Framingham Heart Disease Risk Prediction{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Pastel Gradient -->
+<section class="hero-section" style="min-height: 300px;">
+    <div class="hero-content">
+        <h1 class="hero-title">About Our Project</h1>
+        <p class="hero-subtitle">
+            Understanding the science behind our heart disease risk prediction model
+        </p>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <h2 class="mb-4">Our Mission</h2>
+                    <p>
+                        The Framingham Heart Disease Risk Prediction project aims to make heart disease risk assessment accessible to everyone. Using advanced machine learning algorithms and data from the renowned Framingham Heart Study, we've created a tool that can help individuals understand their risk of developing heart disease within the next 10 years.
+                    </p>
+                    <p>
+                        Heart disease remains one of the leading causes of death worldwide. Early detection and prevention are key to reducing mortality rates. Our tool provides a way for individuals to assess their risk and take proactive measures to improve their heart health.
+                    </p>
+                    
+                    <h2 class="mt-5 mb-4">The Framingham Heart Study</h2>
+                    <p>
+                        Our prediction models are based on data from the Framingham Heart Study, a long-term, ongoing cardiovascular study that began in 1948 with 5,209 adult subjects from Framingham, Massachusetts. The study is now on its third generation of participants.
+                    </p>
+                    <p>
+                        This landmark study has led to the identification of major cardiovascular disease risk factors and has resulted in over 1,000 scientific publications. The Framingham Risk Score, derived from this study, is a widely used tool in clinical practice for estimating an individual's 10-year risk of developing cardiovascular disease.
+                    </p>
+                    
+                    <h2 class="mt-5 mb-4">Our Methodology</h2>
+                    <p>
+                        We've implemented multiple machine learning algorithms to analyze the Framingham Heart Study data and create risk prediction models. These include:
+                    </p>
+                    <ul>
+                        <li><strong>Logistic Regression</strong>: A statistical method that estimates the probability of a binary outcome based on one or more predictor variables.</li>
+                        <li><strong>Support Vector Machine (SVM)</strong>: A supervised learning model that analyzes data for classification and regression analysis.</li>
+                        <li><strong>Decision Tree</strong>: A decision support tool that uses a tree-like model of decisions and their possible consequences.</li>
+                        <li><strong>Random Forest</strong>: An ensemble learning method that constructs multiple decision trees during training and outputs the class that is the mode of the classes output by individual trees.</li>
+                    </ul>
+                    <p>
+                        By comparing the results from these different algorithms, we can provide a more robust and accurate prediction of heart disease risk.
+                    </p>
+                    
+                    <h2 class="mt-5 mb-4">Risk Factors We Consider</h2>
+                    <p>
+                        Our prediction model takes into account the following risk factors, all of which have been shown to be significant predictors of heart disease in the Framingham Heart Study:
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Factor</th>
+                                    <th>Description</th>
+                                    <th>Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sex</td>
+                                    <td>Male or Female</td>
+                                    <td>Men generally have a higher risk than pre-menopausal women</td>
+                                </tr>
+                                <tr>
+                                    <td>Age</td>
+                                    <td>Age in years</td>
+                                    <td>Risk increases with age</td>
+                                </tr>
+                                <tr>
+                                    <td>Cigarettes Per Day</td>
+                                    <td>Number of cigarettes smoked daily</td>
+                                    <td>Smoking increases risk significantly</td>
+                                </tr>
+                                <tr>
+                                    <td>BP Medications</td>
+                                    <td>Whether the person takes blood pressure medication</td>
+                                    <td>Indicates existing hypertension management</td>
+                                </tr>
+                                <tr>
+                                    <td>Previous Stroke</td>
+                                    <td>Whether the person has previously had a stroke</td>
+                                    <td>Previous stroke greatly increases risk</td>
+                                </tr>
+                                <tr>
+                                    <td>Hypertension</td>
+                                    <td>Whether the person has hypertension</td>
+                                    <td>High blood pressure is a major risk factor</td>
+                                </tr>
+                                <tr>
+                                    <td>Diabetes</td>
+                                    <td>Whether the person has diabetes</td>
+                                    <td>Diabetes significantly increases risk</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Cholesterol</td>
+                                    <td>Total cholesterol level (mg/dL)</td>
+                                    <td>Higher levels increase risk</td>
+                                </tr>
+                                <tr>
+                                    <td>Systolic BP</td>
+                                    <td>Systolic blood pressure (mmHg)</td>
+                                    <td>Higher levels increase risk</td>
+                                </tr>
+                                <tr>
+                                    <td>Diastolic BP</td>
+                                    <td>Diastolic blood pressure (mmHg)</td>
+                                    <td>Higher levels increase risk</td>
+                                </tr>
+                                <tr>
+                                    <td>BMI</td>
+                                    <td>Body Mass Index (kg/m²)</td>
+                                    <td>Higher BMI often correlates with increased risk</td>
+                                </tr>
+                                <tr>
+                                    <td>Heart Rate</td>
+                                    <td>Heart rate (beats per minute)</td>
+                                    <td>Elevated resting heart rate may indicate increased risk</td>
+                                </tr>
+                                <tr>
+                                    <td>Glucose</td>
+                                    <td>Blood glucose level (mg/dL)</td>
+                                    <td>Elevated levels increase risk, especially in diabetics</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h2 class="mt-5 mb-4">Limitations</h2>
+                    <p>
+                        While our prediction model is based on robust data and advanced algorithms, it's important to note some limitations:
+                    </p>
+                    <ul>
+                        <li>The Framingham Heart Study primarily included white, middle-class Americans, which may limit its applicability to other populations.</li>
+                        <li>Our model provides an estimate of risk, not a definitive diagnosis.</li>
+                        <li>The tool should be used as one component of a comprehensive approach to heart health.</li>
+                        <li>Individual risk factors and genetic predispositions may not be fully captured by our model.</li>
+                    </ul>
+                    
+                    <div class="alert alert-info mt-5">
+                        <h5 class="alert-heading">Important Disclaimer</h5>
+                        <p>This tool is for educational and informational purposes only and is not intended to replace professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="bg-primary text-white py-5 text-center">
+    <div class="container">
+        <h2 class="mb-3">Ready to Check Your Heart Disease Risk?</h2>
+        <p class="lead mb-4">Use our prediction tool to assess your risk based on the Framingham Heart Study data.</p>
+        <a href="/predict" class="btn btn-lg btn-light">Get Started Now</a>
+    </div>
+</section>
+{% endblock %}
