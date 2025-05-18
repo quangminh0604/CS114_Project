@@ -4,13 +4,15 @@ import logging
 import requests
 from flask import jsonify, request
 from app import app
-
+from dotenv import load_dotenv
 # Configure logging
 logger = logging.getLogger(__name__)
 
-# Gemini API configuration
-GEMINI_API_KEY = ""
-GEMINI_API_URL = ""
+
+load_dotenv(dotenv_path="secret/.env")  # specify the path
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_URL = os.getenv("GEMINI_API_URL")
 
 
 @app.route('/api/find-clinics', methods=['POST'])
