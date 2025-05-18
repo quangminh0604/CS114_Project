@@ -8,7 +8,7 @@ A Flask-based project using PostgreSQL for database operations.
 
 ```bash
 git clone https://github.com/dpduy123/CS114_Project.git
-cd CS114_Project
+cd DemoApp
 ```
 
 ## Run Localhost 
