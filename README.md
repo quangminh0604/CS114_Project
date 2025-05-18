@@ -15,7 +15,7 @@ cd CS114_Project
 ### 1. 📦 Install Required Libraries
 ```bash
 pip install flask flask_sqlalchemy psycopg2-binary
-
+```
 
 ### 2. 🗃️ Create a PostgreSQL Database:
 if you haven't created a database yet:
