@@ -5,13 +5,13 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize the prediction form
   initPredictForm();
-  
+
   // Initialize the batch prediction form
   initBatchUploadForm();
-  
+
   // Set up tab switching
   initTabSwitching();
-  
+
   // Initialize clinic finder
   initClinicFinder();
 });
@@ -22,27 +22,33 @@ document.addEventListener('DOMContentLoaded', function() {
 function initPredictForm() {
   const form = document.getElementById('prediction-form');
   if (!form) return;
-  
+
+  const cigsPerDayInput = document.getElementById('cigsPerDay');
+
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
     // Validate form inputs
     const { isValid, errorMessage } = validateForm(form);
     if (!isValid) {
       showNotification(errorMessage, 'warning');
       return;
     }
-    
+
     // Show loading state
     showLoading('prediction-form', true);
-    
+
+    // Determine currentSmoker from cigsPerDay
+    const cigsPerDayValue = parseFloat(cigsPerDayInput.value || 0);
+    const currentSmokerValue = cigsPerDayValue > 0;
+
     // Gather form data
     const formData = {
       algorithm: document.getElementById('algorithm').value,
       male: document.getElementById('male').checked,
       age: parseInt(document.getElementById('age').value),
-      currentSmoker: document.getElementById('cigsPerDay').value > 0,
-      cigsPerDay: parseFloat(document.getElementById('cigsPerDay').value || 0),
+      currentSmoker: currentSmokerValue,
+      cigsPerDay: cigsPerDayValue,
       BPMeds: document.getElementById('BPMeds').checked,
       prevalentStroke: document.getElementById('prevalentStroke').checked,
       prevalentHyp: document.getElementById('prevalentHyp').checked,
@@ -54,7 +60,7 @@ function initPredictForm() {
       heartRate: parseFloat(document.getElementById('heartRate').value),
       glucose: parseFloat(document.getElementById('glucose').value)
     };
-    
+
     // Send data to the server
     fetch('/api/predict', {
       method: 'POST',
@@ -74,7 +80,7 @@ function initPredictForm() {
     .then(data => {
       // Hide loading state
       showLoading('prediction-form', false);
-      
+
       // Display the result
       displayPredictionResult(data);
     })
@@ -82,17 +88,17 @@ function initPredictForm() {
       handleFormError(error, 'prediction-form');
     });
   });
-  
+
   // Handle BMI calculation
   const heightInput = document.getElementById('height');
   const weightInput = document.getElementById('weight');
   const bmiInput = document.getElementById('BMI');
-  
+
   if (heightInput && weightInput && bmiInput) {
     const calculateBMI = () => {
       const height = parseFloat(heightInput.value);
       const weight = parseFloat(weightInput.value);
-      
+
       if (height && weight) {
         // Calculate BMI (weight in kg / height in meters squared)
         const heightInMeters = height / 100;
@@ -100,7 +106,7 @@ function initPredictForm() {
         bmiInput.value = bmi.toFixed(1);
       }
     };
-    
+
     heightInput.addEventListener('input', calculateBMI);
     weightInput.addEventListener('input', calculateBMI);
   }
