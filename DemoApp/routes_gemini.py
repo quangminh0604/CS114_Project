@@ -9,8 +9,9 @@ from app import app
 logger = logging.getLogger(__name__)
 
 # Gemini API configuration
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+GEMINI_API_KEY = "AIzaSyBR7zuQ1xDgumGSLpQYmiZ0zSXKBsjbW1o"
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+
 
 @app.route('/api/find-clinics', methods=['POST'])
 def find_clinics():
@@ -47,19 +48,19 @@ def generate_nearby_clinics(address):
     """
     try:
         # Construct prompt for Gemini
-        prompt = f"""Generate a list of 5 realistic but fictional heart and cardiovascular clinics near this address: {address}.
-        
-For each clinic, provide:
-1. Name (make it sound like a realistic cardiology clinic)
-2. Address (realistic address near {address})
-3. Phone number (formatted like XXX-XXX-XXXX)
-4. Rating (between 3.0 and 5.0)
-5. A short description (1-2 sentences about their cardiology specialties)
+        prompt = f"""Tìm từ 3 đến 4 bệnh viện chuyên khoa tim mạch uy tín gần địa chỉ sau: {address}.
 
-Format your response as a JSON array with objects containing the fields: name, address, phone, rating, description.
-Do not include any explanations or markdown, just return valid JSON data that can be parsed directly.
+Với mỗi địa điểm, cung cấp:
+1. Tên phòng khám hoặc bệnh viện
+2. Địa chỉ cụ thể
+3. Số điện thoại liên hệ (nếu có)
+4. Xếp hạng (nếu có, trên thang điểm 5)
+5. Mô tả ngắn gọn (1-2 câu về chuyên môn hoặc dịch vụ nổi bật của họ)
+
+Định dạng phản hồi dưới dạng JSON array với các object chứa các trường: name, address, phone, rating, description.
+
+Chỉ trả về dữ liệu JSON hợp lệ, không kèm theo giải thích hay markdown.
 """
-
         # Call Gemini API
         payload = {
             "contents": [{
