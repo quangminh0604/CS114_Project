@@ -2,6 +2,18 @@
 
 A Flask-based machine learning web application that uses Logistic Regression, Support Vector Machine (SVM), Decision Trees, and Random Forest to predict the likelihood of heart attack based on the **Framingham Heart Study dataset**. The project also compares the performance and accuracy of these models.
 ---
+## 🧠 Machine Learning Models Used
+
+- 🔹 Logistic Regression
+
+- 🔹 Support Vector Machine (SVM)
+
+- 🔹 Decision Tree
+
+- 🔹 Random Forest
+
+Each model is trained using the Framingham Heart Study dataset, and their prediction performance is compared using accuracy and other metrics.
+---
 ## 📊 Dataset
 - 📁 Dataset: framingham.csv
 - 📌 Source: Framingham Heart Study
@@ -35,7 +47,7 @@ $env:SQLALCHEMY_DATABASE_URI = "postgresql://username:yourpassword@localhost:543
 
 🔹 MacOS/Linux
 ```bash
-export DATABASE_URI = "postgresql://username:yourpassword@localhost/mydatabase"
+export DATABASE_URL = "postgresql://username:yourpassword@localhost/mydatabase"
 ```
 ⚠️ Replace username and yourpassword with your actual PostgreSQL credentials.
 
@@ -52,17 +64,6 @@ Your app should now be running on http://localhost:5000. (or port 5432)
 - Make sure **environment variables** are properly set before starting the app.
 - Customize your **database connection string** (`SQLALCHEMY_DATABASE_URI`) as needed.
 
-## 🧠 Machine Learning Models Used
-
-- 🔹 Logistic Regression
-
-- 🔹 Support Vector Machine (SVM)
-
-- 🔹 Decision Tree
-
-- 🔹 Random Forest
-
-Each model is trained using the Framingham Heart Study dataset, and their prediction performance is compared using accuracy and other metrics.
 ## 🛠️ Technologies Used
 - Frontend: HTML/CSS, JavaScript
 - Backend: Python, Flask, SQLAlchemy
