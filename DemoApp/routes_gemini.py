@@ -9,8 +9,8 @@ from app import app
 logger = logging.getLogger(__name__)
 
 # Gemini API configuration
-GEMINI_API_KEY = "AIzaSyBR7zuQ1xDgumGSLpQYmiZ0zSXKBsjbW1o"
-GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+GEMINI_API_KEY = ""
+GEMINI_API_URL = ""
 
 
 @app.route('/api/find-clinics', methods=['POST'])
