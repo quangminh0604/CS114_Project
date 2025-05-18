@@ -26,11 +26,38 @@ Each model is trained using the Framingham Heart Study dataset, and their predic
 git clone https://github.com/dpduy123/CS114_Project.git
 cd DemoApp
 ```
+## 🛡️ Setup Gemini API Key
+To use the Gemini API for finding nearby clinics:
+### 1. 🔐 Get Your API Key
+- Visit Google AI Studio or Google Cloud Console
+- Enable the Gemini API / Generative Language API
+- Create a new API key
+### 2. 🗂️ Create a .env File
+Create a folder named secret/ in your project root and add a file named .env inside it:
+```bash
+CS114_Project/DemoApp
+├── app.py
+├── ...
+└── secret/
+    └── .env
+```
+Add the following content to secret/.env:
+```.env
+GEMINI_API_KEY=your_actual_gemini_api_key_here
+GEMINI_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent
+```
+⚠️ Do not share or commit this file.
 
-## Run Locally
+### 3. ✅ Already Configured in Code
+```python 
+from dotenv import load_dotenv
+load_dotenv(dotenv_path="secret/.env")
+```
+
+## 🖥️ Run Locally
 ### 1. 📦 Install Required Libraries
 ```bash
-pip install flask flask_sqlalchemy psycopg2-binary
+pip install flask flask_sqlalchemy psycopg2-binary scikit-learn pandas matplotlib seaborn python-dotenv
 ```
 
 ### 2. 🗃️ Create a PostgreSQL Database:
