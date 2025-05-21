@@ -285,7 +285,7 @@ function displayPredictionResult(result) {
         <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Find Nearby Heart Specialists</h5>
       </div>
       <div class="card-body">
-        <p>Enter your address to find cardiologists and heart clinics near you:</p>
+        <p>Enter your address to find cardiologists and heart hospitals near you:</p>
         <div class="input-group mb-3">
           <input type="text" id="address-input" class="form-control" placeholder="Enter your address">
           <button class="btn btn-primary" type="button" id="find-clinics-btn">
@@ -319,7 +319,7 @@ function displayPredictionResult(result) {
           // Find nearby heart clinics using Gemini API
           findNearbyHeartClinics(address);
         } else {
-          showNotification('Please enter your address to find nearby clinics.', 'warning');
+          showNotification('Please enter your address to find nearby hospitals.', 'warning');
         }
       });
     }

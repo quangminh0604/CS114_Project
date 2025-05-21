@@ -29,15 +29,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="/">
-                    <svg class="logo" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 5C11.729 5 5 11.729 5 20C5 28.271 11.729 35 20 35C28.271 35 35 28.271 35 20C35 11.729 28.271 5 20 5Z" stroke="#1E88E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M20 13V20L25 25" stroke="#1E88E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M20 5C11.729 5 5 11.729 5 20C5 28.271 11.729 35 20 35" stroke="#26A69A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M13 20H11" stroke="#FF7043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M29 20H27" stroke="#FF7043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M20 11V13" stroke="#FF7043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M20 27V29" stroke="#FF7043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" width="40" height="40" class="logo">
                     <span class="navbar-brand-text">Heart Risk Predictor</span>
                 </a>
                 
