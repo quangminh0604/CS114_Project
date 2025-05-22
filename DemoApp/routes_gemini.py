@@ -4,13 +4,13 @@ import logging
 import requests
 from flask import jsonify, request
 from app import app
-from dotenv import load_dotenv
+
 # Configure logging
 logger = logging.getLogger(__name__)
 
-
+# Gemini API configuration
+from dotenv import load_dotenv
 load_dotenv(dotenv_path="secret/.env")  # specify the path
-
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GEMINI_API_URL = os.getenv("GEMINI_API_URL")
 
@@ -50,7 +50,7 @@ def generate_nearby_clinics(address):
     """
     try:
         # Construct prompt for Gemini
-        prompt = f"""Tìm từ 3 đến 4 bệnh viện chuyên khoa tim mạch uy tín gần địa chỉ sau: {address}.
+        prompt = f"""Tìm từ 3 đến 5 bệnh viện chuyên khoa tim mạch uy tín gần địa chỉ sau: {address}.
 
 Với mỗi địa điểm, cung cấp:
 1. Tên phòng khám hoặc bệnh viện
