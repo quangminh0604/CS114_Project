@@ -71,6 +71,10 @@ createdb -U postgres mydatabase
 ```powershell
 $env:SQLALCHEMY_DATABASE_URI = "postgresql://username:yourpassword@localhost:5432/mydatabase"
 ```
+🔹 Windows (bash)
+```bash
+$env:DATABASE_URL = "postgresql://username:yourpassword@localhost:5432/mydatabase"
+```
 
 🔹 MacOS/Linux
 ```bash
