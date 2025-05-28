@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
-{% block title %}Heart Disease Symptoms - Framingham Heart Disease Risk Prediction{% endblock %}
+{% block title %}Stroke Symptoms{% endblock %}
 
 {% block content %}
 <!-- Hero Section with Pastel Gradient -->
 <section class="hero-section" style="min-height: 300px;">
     <div class="hero-content">
-        <h1 class="hero-title">Common Heart Disease Symptoms</h1>
+        <h1 class="hero-title">Recognizing Stroke Symptoms</h1>
         <p class="hero-subtitle">
-            Recognizing the warning signs that could indicate heart problems
+            Acting F.A.S.T. can save a life - know the warning signs of stroke
         </p>
     </div>
 </section>
@@ -17,36 +17,86 @@
 <section class="container my-5">
     <div class="row">
         <div class="col-lg-8 mx-auto">
-            <div class="alert alert-warning">
+            <div class="alert alert-danger">
                 <div class="d-flex">
                     <div class="me-3">
                         <i class="fas fa-exclamation-triangle fa-2x"></i>
                     </div>
                     <div>
-                        <h5 class="alert-heading">Emergency Warning</h5>
-                        <p class="mb-0">If you are experiencing chest pain, shortness of breath, or symptoms of a heart attack, call emergency services (115) immediately. Don't wait to see if symptoms go away.</p>
+                        <h5 class="alert-heading">Stroke Emergency Warning</h5>
+                        <p class="mb-0">Stroke is a medical emergency! If you suspect someone is having a stroke, call emergency services (115) immediately. Every minute counts - quick treatment can save brain tissue and reduce long-term disability.</p>
                     </div>
                 </div>
             </div>
             
             <p class="lead mt-4">
-                Heart disease often develops slowly over time, and many people don't know they have it until they experience a heart attack or heart failure. Recognizing the symptoms early can lead to faster treatment and better outcomes.
+                A stroke occurs when blood flow to part of the brain is blocked or when a blood vessel in the brain bursts. Brain cells begin to die within minutes, making immediate medical attention critical for the best possible outcome.
             </p>
             
-            <h3 class="mt-5 mb-4">Common Symptoms of Heart Disease</h3>
+            <!-- F.A.S.T. Acronym Section -->
+            <div class="alert alert-primary" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%); border: none; color: white;">
+                <div class="text-center">
+                    <h2 class="mb-4">Remember F.A.S.T.</h2>
+                    <p class="lead mb-4">Use this simple test to quickly identify stroke symptoms:</p>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-center mb-3">
+                                <div class="rounded-circle me-3 text-center" style="width: 80px; height: 80px; line-height: 80px; background: rgba(255, 255, 255, 0.2); font-size: 2rem; font-weight: bold;">F</div>
+                                <div class="text-start">
+                                    <h4>Face Drooping</h4>
+                                    <p class="mb-0">Ask the person to smile. Does one side of the face droop or feel numb?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-center mb-3">
+                                <div class="rounded-circle me-3 text-center" style="width: 80px; height: 80px; line-height: 80px; background: rgba(255, 255, 255, 0.2); font-size: 2rem; font-weight: bold;">A</div>
+                                <div class="text-start">
+                                    <h4>Arm Weakness</h4>
+                                    <p class="mb-0">Ask the person to raise both arms. Does one arm drift downward?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-center mb-3">
+                                <div class="rounded-circle me-3 text-center" style="width: 80px; height: 80px; line-height: 80px; background: rgba(255, 255, 255, 0.2); font-size: 2rem; font-weight: bold;">S</div>
+                                <div class="text-start">
+                                    <h4>Speech Difficulty</h4>
+                                    <p class="mb-0">Ask the person to repeat a simple phrase. Is speech slurred or strange?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center justify-content-center mb-3">
+                                <div class="rounded-circle me-3 text-center" style="width: 80px; height: 80px; line-height: 80px; background: rgba(255, 255, 255, 0.2); font-size: 2rem; font-weight: bold;">T</div>
+                                <div class="text-start">
+                                    <h4>Time to Call 115</h4>
+                                    <p class="mb-0">If any of these signs are present, note the time and call emergency services immediately!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="mt-5 mb-4">Common Symptoms of Stroke</h3>
             
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="rounded-circle bg-primary p-3 me-3 text-white">
-                                    <i class="fas fa-heart-broken"></i>
+                                <div class="rounded-circle bg-new p-3 me-3 text-white">
+                                    <i class="fas fa-smile"></i>
                                 </div>
-                                <h5 class="card-title mb-0">Chest Pain or Discomfort</h5>
+                                <h5 class="card-title mb-0">Facial Drooping</h5>
                             </div>
                             <p class="card-text">
-                                The most common symptom is chest pain (angina) that feels like pressure, squeezing, fullness, or pain in the center or left side of the chest. It may come and go.
+                                Sudden numbness or weakness of the face, especially on one side. The person may be unable to smile normally or their face may appear uneven.
                             </p>
                         </div>
                     </div>
@@ -56,13 +106,13 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="rounded-circle bg-primary p-3 me-3 text-white">
-                                    <i class="fas fa-wind"></i>
+                                <div class="rounded-circle bg-new p-3 me-3 text-white">
+                                    <i class="fas fa-hand-paper"></i>
                                 </div>
-                                <h5 class="card-title mb-0">Shortness of Breath</h5>
+                                <h5 class="card-title mb-0">Arm or Leg Weakness</h5>
                             </div>
                             <p class="card-text">
-                                Feeling breathless during normal activities or at rest, especially when lying down. This can occur alone or with chest discomfort.
+                                Sudden numbness or weakness in the arm, leg, or entire side of the body. May experience difficulty lifting or moving limbs.
                             </p>
                         </div>
                     </div>
@@ -72,13 +122,13 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="rounded-circle bg-primary p-3 me-3 text-white">
-                                    <i class="fas fa-tired"></i>
+                                <div class="rounded-circle bg-new p-3 me-3 text-white">
+                                    <i class="fas fa-comments"></i>
                                 </div>
-                                <h5 class="card-title mb-0">Fatigue & Weakness</h5>
+                                <h5 class="card-title mb-0">Speech Problems</h5>
                             </div>
                             <p class="card-text">
-                                Unusual fatigue, weakness, or unexplained tiredness, especially during activities that used to be easy.
+                                Sudden difficulty speaking or understanding speech. Words may be slurred, garbled, or the person may be unable to speak at all.
                             </p>
                         </div>
                     </div>
@@ -88,13 +138,45 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="rounded-circle bg-primary p-3 me-3 text-white">
+                                <div class="rounded-circle bg-new p-3 me-3 text-white">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <h5 class="card-title mb-0">Vision Problems</h5>
+                            </div>
+                            <p class="card-text">
+                                Sudden loss of vision or visual disturbances in one or both eyes. May see double or have partial vision loss.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="rounded-circle bg-new p-3 me-3 text-white">
+                                    <i class="fas fa-head-side-virus"></i>
+                                </div>
+                                <h5 class="card-title mb-0">Severe Headache</h5>
+                            </div>
+                            <p class="card-text">
+                                Sudden, severe headache with no known cause. Often described as "the worst headache of my life."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="rounded-circle bg-new p-3 me-3 text-white">
                                     <i class="fas fa-dizzy"></i>
                                 </div>
-                                <h5 class="card-title mb-0">Lightheadedness</h5>
+                                <h5 class="card-title mb-0">Dizziness & Balance</h5>
                             </div>
                             <p class="card-text">
-                                Feeling dizzy, lightheaded, or fainting. This can be due to insufficient blood flow to the brain.
+                                Sudden dizziness, loss of balance, coordination, or sudden falls without explanation.
                             </p>
                         </div>
                     </div>
@@ -104,13 +186,13 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="rounded-circle bg-primary p-3 me-3 text-white">
-                                    <i class="fas fa-heartbeat"></i>
+                                <div class="rounded-circle bg-new p-3 me-3 text-white">
+                                    <i class="fas fa-brain"></i>
                                 </div>
-                                <h5 class="card-title mb-0">Irregular Heartbeat</h5>
+                                <h5 class="card-title mb-0">Confusion</h5>
                             </div>
                             <p class="card-text">
-                                Heart palpitations or feeling like your heart is skipping beats, beating too fast, or pounding.
+                                Sudden confusion, trouble understanding, or difficulty with mental function and awareness.
                             </p>
                         </div>
                     </div>
@@ -120,63 +202,28 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="rounded-circle bg-primary p-3 me-3 text-white">
-                                    <i class="fas fa-tint"></i>
+                                <div class="rounded-circle bg-new p-3 me-3 text-white">
+                                    <i class="fas fa-walking"></i>
                                 </div>
-                                <h5 class="card-title mb-0">Swelling</h5>
+                                <h5 class="card-title mb-0">Trouble Walking</h5>
                             </div>
                             <p class="card-text">
-                                Swelling in the legs, ankles, feet, or abdomen due to fluid buildup. This can indicate heart failure.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="rounded-circle bg-primary p-3 me-3 text-white">
-                                    <i class="fas fa-snowflake"></i>
-                                </div>
-                                <h5 class="card-title mb-0">Cold Sweats</h5>
-                            </div>
-                            <p class="card-text">
-                                Breaking out in a cold sweat for no obvious reason, especially if accompanied by other symptoms.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="rounded-circle bg-primary p-3 me-3 text-white">
-                                    <i class="fas fa-user-injured"></i>
-                                </div>
-                                <h5 class="card-title mb-0">Pain in Upper Body</h5>
-                            </div>
-                            <p class="card-text">
-                                Pain or discomfort that spreads to the shoulders, arms, back, neck, jaw, or upper stomach.
+                                Sudden difficulty walking, stumbling, or loss of coordination and balance.
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <h3 class="mt-5 mb-4">Symptoms May Differ in Women</h3>
-            <p>
-                Women are more likely than men to experience symptoms other than chest pain when having a heart attack. These symptoms can include:
-            </p>
+            <h3 class="mt-5 mb-4">Types of Stroke</h3>
             
             <div class="row g-4">
                 <div class="col-md-6">
-                    <div class="card h-100 border-secondary">
+                    <div class="card h-100 border-primary">
                         <div class="card-body">
-                            <h5 class="card-title">Nausea and Vomiting</h5>
+                            <h5 class="card-title">Ischemic Stroke (87%)</h5>
                             <p class="card-text">
-                                Women are more likely to experience nausea or vomiting during a heart attack.
+                                Caused by a blocked artery in the brain, usually due to a blood clot. This is the most common type of stroke.
                             </p>
                         </div>
                     </div>
@@ -185,48 +232,37 @@
                 <div class="col-md-6">
                     <div class="card h-100 border-secondary">
                         <div class="card-body">
-                            <h5 class="card-title">Back or Jaw Pain</h5>
+                            <h5 class="card-title">Hemorrhagic Stroke (13%)</h5>
                             <p class="card-text">
-                                Pain in the jaw, back, or neck is more common in women during a heart attack.
+                                Caused by a blood vessel bursting in the brain. Often accompanied by severe headache and has more sudden, severe onset.
                             </p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-md-6">
-                    <div class="card h-100 border-secondary">
+                <div class="col-12">
+                    <div class="card border-secondary">
                         <div class="card-body">
-                            <h5 class="card-title">Extreme Fatigue</h5>
+                            <h5 class="card-title">Transient Ischemic Attack (TIA)</h5>
                             <p class="card-text">
-                                Unusual fatigue that lasts for several days or sudden severe fatigue for no apparent reason.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="card h-100 border-secondary">
-                        <div class="card-body">
-                            <h5 class="card-title">Sleep Disturbances</h5>
-                            <p class="card-text">
-                                Difficulty sleeping may occur weeks before a heart attack in women.
+                                Also called a "mini stroke" - a temporary blockage of blood flow to the brain. Symptoms are similar to stroke but typically last only minutes to hours. Don't ignore a TIA as it's often a warning sign that a major stroke may occur soon.
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <h3 class="mt-5 mb-4">When to See a Doctor</h3>
+            <h3 class="mt-5 mb-4">When to Seek Emergency Care</h3>
             <p>
-                Contact your doctor if you experience any of the following:
+                Contact emergency services immediately if you or someone else experiences any of the following:
             </p>
             <ul class="list-group mb-4">
-                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Chest pain, discomfort, pressure, or squeezing, even if it goes away</li>
-                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Shortness of breath, especially with minimal exertion</li>
-                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Unexplained fatigue or weakness</li>
-                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Swelling in your feet, ankles, legs, or abdomen</li>
-                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Heart palpitations or irregular heartbeat</li>
-                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Dizziness or lightheadedness</li>
+                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Any sudden onset of face drooping, arm weakness, or speech difficulty</li>
+                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Sudden severe headache unlike any experienced before</li>
+                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Sudden loss of vision or visual disturbances</li>
+                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Sudden dizziness, loss of balance, or coordination</li>
+                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Sudden numbness or tingling, especially on one side</li>
+                <li class="list-group-item"><i class="fas fa-check-circle text-primary me-2"></i> Sudden confusion or difficulty understanding</li>
             </ul>
             
             <div class="alert alert-danger">
@@ -236,12 +272,13 @@
                     </div>
                     <div>
                         <h5 class="alert-heading">Call 115 immediately if:</h5>
-                        <ul class="mb-0">
-                            <li>You experience chest pain or discomfort that lasts more than a few minutes or goes away and comes back</li>
-                            <li>You have severe shortness of breath</li>
-                            <li>You experience severe pain spreading to the arms, neck, jaw, or back</li>
-                            <li>You feel a sense of impending doom, cold sweat, nausea, or lightheadedness</li>
+                        <ul class="mb-2">
+                            <li>Any sudden onset of stroke symptoms, even if they seem to improve</li>
+                            <li>Any combination of face drooping, arm weakness, or speech difficulty</li>
+                            <li>Sudden severe headache unlike any experienced before</li>
+                            <li>Sudden loss of consciousness or significant confusion</li>
                         </ul>
+                        <p class="mb-0"><strong>Remember:</strong> Even if symptoms seem to go away, still seek emergency care immediately. Time is brain!</p>
                     </div>
                 </div>
             </div>
@@ -250,10 +287,10 @@
 </section>
 
 <!-- Call to Action Section -->
-<section class="bg-primary text-white py-5 text-center">
+<section class="bg-new text-white py-5 text-center">
     <div class="container">
-        <h2 class="mb-3">Check Your Heart Disease Risk Now</h2>
-        <p class="lead mb-4">Use our prediction tool based on the Framingham Heart Study to assess your 10-year risk.</p>
+        <h2 class="mb-3">Assess Your Stroke Risk Now</h2>
+        <p class="lead mb-4">Understanding your risk factors can help prevent stroke before it happens.</p>
         <a href="/predict" class="btn btn-lg btn-light">Get Your Risk Assessment</a>
     </div>
 </section>

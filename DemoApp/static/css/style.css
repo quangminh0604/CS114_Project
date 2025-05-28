@@ -1,5 +1,6 @@
 /* Global Styles */
 :root {
+  --new-color:rgb(48 72 109);
   --primary-color: #1e88e5;
   --secondary-color: #26a69a;
   --accent-color: #ff7043;
@@ -46,6 +47,10 @@ body {
   color: var(--primary-color);
 }
 
+.bg-new {
+  background-color: var(--new-color) !important;
+}
+
 .nav-item {
   margin: 0 0.5rem;
 }
@@ -70,7 +75,7 @@ body {
 
 /* Hero Section with Pastel Gradient */
 .hero-section {
-  background: linear-gradient(135deg, #c1e3ff 0%, #f3e7ff 50%, #ffe8e8 100%);
+  background: linear-gradient(135deg, #154d7c 0%, #f3e7ff 50%, #bbbbbb 100%);
   min-height: 400px;
   display: flex;
   align-items: center;

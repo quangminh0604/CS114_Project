@@ -8,20 +8,13 @@ class Prediction(db.Model):
     algorithm = db.Column(db.String(50), nullable=False)
     
     # Framingham Heart Study parameters
-    male = db.Column(db.Boolean, nullable=False)
+    gender = db.Column(db.String, nullable=False)
     age = db.Column(db.Integer, nullable=False)
-    currentSmoker = db.Column(db.Boolean)
-    cigsPerDay = db.Column(db.Float)
-    BPMeds = db.Column(db.Boolean)
-    prevalentStroke = db.Column(db.Boolean)
-    prevalentHyp = db.Column(db.Boolean)
-    diabetes = db.Column(db.Boolean)
-    totChol = db.Column(db.Float)
-    sysBP = db.Column(db.Float)
-    diaBP = db.Column(db.Float)
-    BMI = db.Column(db.Float)
-    heartRate = db.Column(db.Float)
-    glucose = db.Column(db.Float)
+    smokingStatus = db.Column(db.String, nullable=False)
+    hypertension = db.Column(db.Boolean, nullable=False)
+    heartDisease = db.Column(db.Boolean, nullable=False)
+    avgGlucose = db.Column(db.Float, nullable=False)
+    BMI = db.Column(db.Float, nullable=False)
     
     # Prediction result
     risk_prediction = db.Column(db.Boolean, nullable=False)
@@ -36,20 +29,13 @@ class Prediction(db.Model):
             'id': self.id,
             'timestamp': self.timestamp.isoformat(),
             'algorithm': self.algorithm,
-            'male': self.male,
+            'gender': self.gender,
             'age': self.age,
-            'currentSmoker': self.currentSmoker,
-            'cigsPerDay': self.cigsPerDay,
-            'BPMeds': self.BPMeds,
-            'prevalentStroke': self.prevalentStroke,
-            'prevalentHyp': self.prevalentHyp,
-            'diabetes': self.diabetes,
-            'totChol': self.totChol,
-            'sysBP': self.sysBP,
-            'diaBP': self.diaBP,
+            'smokingStatus': self.smokingStatus,
+            'hypertension': self.hypertension,
+            'heartDisease': self.heartDisease,
+            'avgGlucose': self.avgGlucose,
             'BMI': self.BMI,
-            'heartRate': self.heartRate,
-            'glucose': self.glucose,
             'risk_prediction': self.risk_prediction
         }
 

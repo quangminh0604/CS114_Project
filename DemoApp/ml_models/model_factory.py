@@ -9,7 +9,20 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
-from ml_models.custom_models import LogisticRegressionScratch, DecisionTreeScratch, RandomForestScratch, SVMScratch
+from ml_models.custom_models import KernelSVM, ANN, DecisionTree, KNNScratch, rbf_kernel
+import pandas as pd
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -20,24 +33,21 @@ os.makedirs(MODELS_DIR, exist_ok=True)
 
 # Feature names for Framingham Heart Disease dataset
 FEATURE_NAMES = [
-    'male', 'age', 'currentSmoker', 'cigsPerDay', 'BPMeds', 
-    'prevalentStroke', 'prevalentHyp', 'diabetes', 'totChol', 
-    'sysBP', 'diaBP', 'BMI', 'heartRate', 'glucose'
+    'gender', 'age', 'bmi', 'avg_glucose_level', 
+    'heart_disease', 'hypertension', 'smoking_status'
 ]
 
 # Define all models
 MODELS = {
     # Sklearn models
-    'logistic_regression_sklearn': LogisticRegression(random_state=42, max_iter=1000),
     'svm_sklearn': SVC(kernel='rbf', probability=True, random_state=42),
     'decision_tree_sklearn': DecisionTreeClassifier(random_state=42, max_depth=5),
-    'random_forest_sklearn': RandomForestClassifier(random_state=42, n_estimators=100, max_depth=5),
+    'knn_sklearn': KNeighborsClassifier(n_neighbors=5),
     
     # From scratch models
-    'logistic_regression_scratch': LogisticRegressionScratch(learning_rate=0.1, n_iters=1000),
-    'svm_scratch': SVMScratch(C=1.0, gamma=0.5),
-    'decision_tree_scratch': DecisionTreeScratch(max_depth=5, random_state=42),
-    'random_forest_scratch': RandomForestScratch(n_trees=20, max_depth=5, random_state=42)  # Using 20 trees for faster performance
+    'svm_from_scratch': KernelSVM(kernel=rbf_kernel, C=1.0, max_iters=1000, lr=0.01),
+    'decision_tree_from_scratch': DecisionTree(depth_limit=8),
+    'knn_from_scratch': KNNScratch(k=4, weights='distance', metric='euclidean')
 }
 
 def load_train_data():
@@ -134,16 +144,18 @@ def initialize_models():
 def predict_with_model(model_name, data, return_probability=False):
     """Make predictions using a saved model"""
     # Load model and scaler
-    model_path = os.path.join(MODELS_DIR, f"{model_name}_model.joblib")
-    scaler_path = os.path.join(MODELS_DIR, f"{model_name}_scaler.joblib")
-    
-    if not (os.path.exists(model_path) and os.path.exists(scaler_path)):
+    model_path = os.path.join(MODELS_DIR, f"{model_name}_model.joblib") 
+    preprocessor_path = os.path.join(MODELS_DIR, "preprocessor.joblib")
+    scaler_path = os.path.join(MODELS_DIR, "scaler.joblib")
+
+    if not (os.path.exists(model_path)):
         logger.error(f"Model or scaler file for {model_name} not found")
         raise FileNotFoundError(f"Model files for {model_name} not found")
     
     model = joblib.load(model_path)
+    preprocessor = joblib.load(preprocessor_path)
     scaler = joblib.load(scaler_path)
-    
+
     # Preprocess input data
     if isinstance(data, dict):
         df = pd.DataFrame([data])
@@ -154,17 +166,13 @@ def predict_with_model(model_name, data, return_probability=False):
     missing_features = set(FEATURE_NAMES) - set(df.columns)
     if missing_features:
         raise ValueError(f"Missing features: {missing_features}")
-    
-    # Scale features
-    X_scaled = scaler.transform(df[FEATURE_NAMES])
+    X_preprocessed = preprocessor.transform(df[FEATURE_NAMES])
+    X_scaled = scaler.transform(X_preprocessed)
     
     # Make prediction
     prediction = model.predict(X_scaled)
     
-    if return_probability and hasattr(model, "predict_proba"):
-        probability = model.predict_proba(X_scaled)[:, 1]
-        return prediction, probability
-    
+     
     return prediction
 
 def evaluate_models_on_data(data, target):
@@ -181,13 +189,16 @@ def evaluate_models_on_data(data, target):
         try:
             # Load model and scaler
             model_path = os.path.join(MODELS_DIR, f"{model_name}_model.joblib")
-            scaler_path = os.path.join(MODELS_DIR, f"{model_name}_scaler.joblib")
+            preprocessor_path = os.path.join(MODELS_DIR, "preprocessor.joblib")
+            scaler_path = os.path.join(MODELS_DIR, "scaler.joblib")
+
             
             if not (os.path.exists(model_path) and os.path.exists(scaler_path)):
                 results[model_name] = {"error": f"Model files for {model_name} not found"}
                 continue
             
             model = joblib.load(model_path)
+            preprocessor = joblib.load(preprocessor_path)
             scaler = joblib.load(scaler_path)
             
             # Ensure all required features are present
@@ -197,7 +208,8 @@ def evaluate_models_on_data(data, target):
                 continue
             
             # Scale features
-            X_scaled = scaler.transform(data[FEATURE_NAMES])
+            X_scaled = preprocessor.transform(data[FEATURE_NAMES])
+            X_scaled = scaler.transform(X_scaled)
             
             # Make predictions
             y_pred = model.predict(X_scaled)

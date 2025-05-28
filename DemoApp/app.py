@@ -40,7 +40,7 @@ with app.app_context():
     db.create_all()
     
     # Initialize ML models during startup
-    from ml_models.model_trainer import initialize_models
-    initialize_models()
+    # from ml_models.model_trainer import initialize_models
+    # initialize_models()
     
     logger.info("Application initialized successfully")

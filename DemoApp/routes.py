@@ -18,14 +18,14 @@ GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY", "")
 
 # Available ML algorithms
 ML_ALGORITHMS = {
-    'logistic_regression_sklearn': 'Logistic Regression (sklearn)',
-    'logistic_regression_scratch': 'Logistic Regression (from scratch)',
-    'svm_sklearn': 'SVM (sklearn)',
-    'svm_scratch': 'SVM (from scratch)',
+    'knn_sklearn': 'K-nearest neighbor (sklearn)',
+    'knn_from_scratch': 'K-nearest neighbor (from scratch)',
+    'svm_sklearn': 'Support Vector Machine (sklearn)',
+    'svm_from_scratch': 'Support Vector Machine (from scratch)',
     'decision_tree_sklearn': 'Decision Tree (sklearn)',
-    'decision_tree_scratch': 'Decision Tree (from scratch)',
-    'random_forest_sklearn': 'Random Forest (sklearn)',
-    'random_forest_scratch': 'Random Forest (from scratch)'
+    'decision_tree_from_scratch': 'Decision Tree (from scratch)',
+    'ann_tensorflow': 'Artificial Neural Network (tensorflow)',
+    'ann_from_scratch': 'Artificial Neural Network (from scratch)'
 }
 
 @app.route('/')
@@ -66,6 +66,8 @@ def api_predict():
     try:
         # Get JSON data from request
         data = request.json
+          # Debugging line to check received data
+        # data = {}
         
         # Get selected algorithm
         algorithm = data.pop('algorithm', 'logistic_regression_sklearn')
@@ -78,11 +80,6 @@ def api_predict():
             return jsonify({'error': message}), 400
         
         # Automatically set currentSmoker based on cigsPerDay
-        if 'cigsPerDay' in data:
-            data['currentSmoker'] = data['cigsPerDay'] > 0
-        elif 'currentSmoker' not in data:
-            data['currentSmoker'] = False
-            
         # Make prediction
         prediction = predict_with_model(algorithm, data, return_probability=False)
         
@@ -90,19 +87,13 @@ def api_predict():
             # Store prediction in database
             new_prediction = Prediction(
                 algorithm=algorithm,
-                male=data['male'],
+                gender=data['gender'],
                 age=data['age'],
-                cigsPerDay=data['cigsPerDay'],
-                BPMeds=data['BPMeds'],
-                prevalentStroke=data['prevalentStroke'],
-                prevalentHyp=data['prevalentHyp'],
-                diabetes=data['diabetes'],
-                totChol=data['totChol'],
-                sysBP=data['sysBP'],
-                diaBP=data['diaBP'],
-                BMI=data['BMI'],
-                heartRate=data['heartRate'],
-                glucose=data['glucose'],
+                BMI=data['bmi'],
+                glucose=data['avg_glucose_level'],
+                smokingStatus=data.get('smoking_status', None),
+                hypertension=data.get('hypertension', None),
+                heartDisease=data.get('heart_disease', None),
                 risk_prediction=bool(prediction[0])
             )
             # Set currentSmoker separately to handle potential database schema issues
@@ -112,19 +103,13 @@ def api_predict():
             # Create prediction without currentSmoker if there's a schema issue
             new_prediction = Prediction(
                 algorithm=algorithm,
-                male=data['male'],
+                gender=data['gender'],
                 age=data['age'],
-                cigsPerDay=data['cigsPerDay'],
-                BPMeds=data['BPMeds'],
-                prevalentStroke=data['prevalentStroke'],
-                prevalentHyp=data['prevalentHyp'],
-                diabetes=data['diabetes'],
-                totChol=data['totChol'],
-                sysBP=data['sysBP'],
-                diaBP=data['diaBP'],
-                BMI=data['BMI'],
-                heartRate=data['heartRate'],
-                glucose=data['glucose'],
+                BMI=data['bmi'],
+                smokingStatus=data.get('smoking_status', None),
+                hypertension=data.get('hypertension', None),
+                heartDisease=data.get('heart_disease', None),
+                avgGlucose=data['avg_glucose_level'],
                 risk_prediction=bool(prediction[0])
             )
         db.session.add(new_prediction)
@@ -132,6 +117,7 @@ def api_predict():
         
         # Return prediction result
         return jsonify({
+            'algorithm': ML_ALGORITHMS[algorithm],
             'prediction': bool(prediction[0]),
             'risk_level': 'High Risk' if prediction[0] else 'Low Risk'
         })
@@ -153,7 +139,7 @@ def api_batch_predict():
         if algorithm not in ML_ALGORITHMS:
             return jsonify({'error': f"Unknown algorithm: {algorithm}"}), 400
         
-        # Get file from request
+        # Get file from request``
         file = request.files['file']
         if file.filename == '':
             return jsonify({'error': 'No file selected'}), 400
@@ -210,7 +196,7 @@ def api_compare_models():
             return jsonify({'error': result}), 400
         
         # Get target column from form
-        target_column = request.form.get('target', 'TenYearCHD')
+        target_column = request.form.get('target', 'stroke')
         
         # Check if target column exists
         if target_column not in result.columns:

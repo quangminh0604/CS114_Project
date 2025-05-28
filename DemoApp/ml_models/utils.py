@@ -18,9 +18,8 @@ def validate_input_data(data):
         tuple: (is_valid, error_message)
     """
     required_fields = [
-        'male', 'age', 'cigsPerDay', 'BPMeds', 'prevalentStroke', 
-        'prevalentHyp', 'diabetes', 'totChol', 'sysBP', 'diaBP', 
-        'BMI', 'heartRate', 'glucose'
+        'gender', 'age' , 'hypertension', 'smoking_status', 
+        'bmi', 'heart_disease', 'avg_glucose_level'
     ]
     
     # Check for missing fields
@@ -31,7 +30,7 @@ def validate_input_data(data):
     # Validate data types
     try:
         # Convert boolean fields
-        for field in ['male', 'currentSmoker', 'BPMeds', 'prevalentStroke', 'prevalentHyp', 'diabetes']:
+        for field in ['hypertension', 'heart_disease']:
             if isinstance(data[field], str):
                 if data[field].lower() in ['true', 'yes', '1']:
                     data[field] = True
@@ -40,33 +39,19 @@ def validate_input_data(data):
             data[field] = bool(data[field])
         
         # Convert numeric fields
-        for field in ['age', 'cigsPerDay', 'totChol', 'sysBP', 'diaBP', 'BMI', 'heartRate', 'glucose']:
+        for field in ['age',  'bmi', 'avg_glucose_level']:
             data[field] = float(data[field])
         
         # Validate age range
-        if data['age'] < 20 or data['age'] > 100:
-            return False, "Age should be between 20 and 100 years"
+        if data['age'] < 18 or data['age'] > 120:
+            return False, "Age should be between 18 and 100 years"
         
         # Validate other ranges
-        if data['cigsPerDay'] < 0:
-            return False, "Number of cigarettes per day cannot be negative"
-        
-        if data['totChol'] < 100 or data['totChol'] > 600:
-            return False, "Total cholesterol should be between 100 and 600 mg/dL"
-        
-        if data['sysBP'] < 70 or data['sysBP'] > 250:
-            return False, "Systolic blood pressure should be between 70 and 250 mmHg"
-        
-        if data['diaBP'] < 40 or data['diaBP'] > 150:
-            return False, "Diastolic blood pressure should be between 40 and 150 mmHg"
-        
-        if data['BMI'] < 15 or data['BMI'] > 60:
+        if data['bmi'] < 15 or data['bmi'] > 60:
             return False, "BMI should be between 15 and 60"
         
-        if data['heartRate'] < 40 or data['heartRate'] > 200:
-            return False, "Heart rate should be between 40 and 200 beats per minute"
-        
-        if data['glucose'] < 40 or data['glucose'] > 400:
+    
+        if data['avg_glucose_level'] < 40 or data['avg_glucose_level'] > 400:
             return False, "Glucose level should be between 40 and 400 mg/dL"
         
         return True, "Data validation successful"
@@ -91,41 +76,13 @@ def parse_csv_file(file_content):
         
         # Check if required columns are present
         required_columns = [
-            'male', 'age', 'currentSmoker', 'cigsPerDay', 'BPMeds', 'prevalentStroke', 
-            'prevalentHyp', 'diabetes', 'totChol', 'sysBP', 'diaBP', 
-            'BMI', 'heartRate', 'glucose'
-        ]
+        'gender', 'age' , 'hypertension', 'smoking_status', 
+        'bmi', 'heart_disease', 'avg_glucose_level'
+    ]
         
         missing_columns = [col for col in required_columns if col not in df.columns]
         if missing_columns:
             return False, f"Missing required columns: {', '.join(missing_columns)}"
-        
-        # Convert boolean columns
-        boolean_columns = ['male', 'BPMeds', 'prevalentStroke', 'prevalentHyp', 'diabetes']
-        for col in boolean_columns:
-            if df[col].dtype == object:  # If column contains strings
-                df[col] = df[col].map({'True': True, 'False': False, 'Yes': True, 'No': False, 
-                                    'true': True, 'false': False, 'yes': True, 'no': False,
-                                    '1': True, '0': False, 1: True, 0: False})
-        
-        # Convert all columns to appropriate types
-        for col in required_columns:
-            if col in boolean_columns:
-                df[col] = df[col].astype(bool)
-            else:
-                df[col] = pd.to_numeric(df[col], errors='coerce')
-        
-        # Handle missing values
-        df = df.fillna({
-            'cigsPerDay': 0,
-            'BPMeds': False,
-            'prevalentStroke': False,
-            'prevalentHyp': False,
-            'diabetes': False
-        })
-        
-        # Drop rows with missing values in required columns
-        df = df.dropna(subset=['age', 'totChol', 'sysBP', 'diaBP', 'BMI', 'heartRate', 'glucose'])
         
         return True, df
         

@@ -18,21 +18,23 @@
     <div class="row">
         <div class="col-lg-10 mx-auto">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-new text-white">
                     <h4 class="mb-0">Model Comparison Tool</h4>
                 </div>
                 <div class="card-body">
                     <p class="lead">
-                        Upload a labeled dataset to compare the performance of different machine learning algorithms for heart disease prediction.
+                        Upload a labeled dataset to compare the performance of different machine learning algorithms for
+                        potential stroke prediction.
                     </p>
-                    
+
                     <div class="alert alert-info">
                         <h5 class="alert-heading">CSV Format Requirements</h5>
                         <p>Your CSV file must include the following columns:</p>
-                        <code>male, age, cigsPerDay, BPMeds, prevalentStroke, prevalentHyp, diabetes, totChol, sysBP, diaBP, BMI, heartRate, glucose, TenYearCHD</code>
-                        <p class="mb-0 mt-2">The <code>TenYearCHD</code> column should contain the actual outcomes (1 for heart disease, 0 for no heart disease).</p>
+                        <code>gender, age, hypertension, heart_disease, avg_glucose_level, bmi, smoking_status, stroke
+                        <p class="mb-0 mt-2">The <code>stroke</code> column should contain the actual outcomes (1
+                        for stroke, 0 for no stroke).</p>
                     </div>
-                    
+
                     <form id="compare-form">
                         <div class="mb-4">
                             <label for="compare-csv-file" class="form-label">Upload Labeled CSV File:</label>
@@ -45,18 +47,20 @@
                                 <input type="file" class="d-none" id="compare-csv-file" name="file" accept=".csv">
                             </div>
                             <div class="form-text">
-                                This will evaluate all our machine learning models on your dataset and compare their performance.
+                                This will evaluate all our machine learning models on your dataset and compare their
+                                performance.
                             </div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="target-column" class="form-label">Target Column Name:</label>
-                            <input type="text" class="form-control" id="target-column" name="target" value="TenYearCHD" placeholder="Enter the name of the target column">
+                            <input type="text" class="form-control" id="target-column" name="target" value="stroke"
+                                placeholder="Enter the name of the target column">
                             <div class="form-text">
-                                Specify the column name that contains the binary outcome (0/1). Default is TenYearCHD.
+                                Specify the column name that contains the binary outcome (0/1). Default is stroke.
                             </div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Compare Models</button>
                             <div class="loader mt-3">
@@ -65,43 +69,69 @@
                             </div>
                         </div>
                     </form>
-                    
+
                     <!-- Results Display -->
                     <div id="comparison-chart-container" class="mt-5" style="display: none;">
                         <!-- Charts will be dynamically inserted here by JavaScript -->
                     </div>
                 </div>
             </div>
-            
+
             <div class="card mt-4">
                 <div class="card-header bg-secondary text-white">
                     <h5 class="mb-0">About the Machine Learning Models</h5>
                 </div>
                 <div class="card-body">
                     <p>
-                        This tool allows you to compare the performance of several machine learning algorithms on your own dataset. Here's an overview of the models we use:
+                        This tool allows you to compare the performance of several machine learning algorithms on your
+                        own dataset. Here's an overview of the models we use:
                     </p>
-                    
+
                     <div class="row g-4 mt-2">
                         <div class="col-md-6">
                             <div class="card h-100">
                                 <div class="card-header bg-light">
-                                    <h5 class="card-title mb-0">Logistic Regression</h5>
+                                    <h5 class="card-title mb-0">K-Nearest Neighbors (KNN)</h5>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">
-                                        A statistical model that uses a logistic function to model a binary dependent variable. It estimates the probability of a binary outcome based on one or more predictor variables.
+                                        A non-parametric algorithm that classifies data points based on the majority
+                                        label of their k closest neighbors in the feature space.
                                     </p>
                                     <p class="card-text">
-                                        <strong>Versions:</strong> We provide both scikit-learn implementation and a custom implementation from scratch.
+                                        <strong>Versions:</strong> We provide a scikit-learn implementation and a custom
+                                        version implemented from scratch.
                                     </p>
                                     <p class="card-text">
-                                        <strong>Strengths:</strong> Interpretable results, efficient to train, works well with linearly separable data.
+                                        <strong>Strengths:</strong> Simple to implement, effective for small datasets,
+                                        no assumptions about data distribution.
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        
+
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header bg-light">
+                                    <h5 class="card-title mb-0">Artificial Neural Network (ANN)</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        A computing system inspired by biological neural networks, consisting of
+                                        interconnected layers of nodes that can learn complex patterns from data.
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Versions:</strong> We provide a TensorFlow implementation and a custom
+                                        feedforward network from scratch.
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Strengths:</strong> Capable of modeling nonlinear relationships,
+                                        adaptable to many types of problems, supports large datasets.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-md-6">
                             <div class="card h-100">
                                 <div class="card-header bg-light">
@@ -109,18 +139,21 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">
-                                        A supervised learning model that finds the optimal hyperplane that maximally separates different classes in the feature space.
+                                        A supervised learning model that finds the optimal hyperplane that maximally
+                                        separates different classes in the feature space.
                                     </p>
                                     <p class="card-text">
-                                        <strong>Versions:</strong> We provide both scikit-learn implementation and a custom implementation from scratch with RBF kernel.
+                                        <strong>Versions:</strong> We provide both scikit-learn implementation and a
+                                        custom implementation from scratch with RBF kernel.
                                     </p>
                                     <p class="card-text">
-                                        <strong>Strengths:</strong> Effective in high-dimensional spaces, versatile through different kernel functions, robust against overfitting.
+                                        <strong>Strengths:</strong> Effective in high-dimensional spaces, versatile with
+                                        different kernel functions, robust against overfitting.
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6">
                             <div class="card h-100">
                                 <div class="card-header bg-light">
@@ -128,38 +161,22 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">
-                                        A non-parametric supervised learning method that creates a model that predicts the target by learning simple decision rules inferred from the data features.
+                                        A non-parametric supervised learning method that creates a model that predicts
+                                        the target by learning simple decision rules inferred from the data features.
                                     </p>
                                     <p class="card-text">
-                                        <strong>Versions:</strong> We provide both scikit-learn implementation and a custom implementation from scratch using CART algorithm.
+                                        <strong>Versions:</strong> We provide both scikit-learn implementation and a
+                                        custom implementation from scratch using the CART algorithm.
                                     </p>
                                     <p class="card-text">
-                                        <strong>Strengths:</strong> Easy to understand and interpret, requires little data preprocessing, can handle both numerical and categorical data.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <div class="card h-100">
-                                <div class="card-header bg-light">
-                                    <h5 class="card-title mb-0">Random Forest</h5>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        An ensemble learning method that constructs multiple decision trees during training and outputs the class that is the mode of the classes output by individual trees.
-                                    </p>
-                                    <p class="card-text">
-                                        <strong>Versions:</strong> We provide both scikit-learn implementation and a custom implementation from scratch using bagging.
-                                    </p>
-                                    <p class="card-text">
-                                        <strong>Strengths:</strong> Reduces overfitting compared to single decision trees, handles large datasets with higher dimensionality, provides feature importance assessments.
+                                        <strong>Strengths:</strong> Easy to understand and interpret, requires little
+                                        data preprocessing, handles both numerical and categorical data.
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <h5 class="mt-4 mb-3">Performance Metrics Explained</h5>
                     <div class="table-responsive">
                         <table class="table table-striped">
@@ -173,7 +190,8 @@
                             <tbody>
                                 <tr>
                                     <td>Accuracy</td>
-                                    <td>The proportion of correct predictions among the total number of cases examined</td>
+                                    <td>The proportion of correct predictions among the total number of cases examined
+                                    </td>
                                     <td>When classes are balanced and all misclassifications have similar costs</td>
                                 </tr>
                                 <tr>
@@ -193,8 +211,10 @@
                                 </tr>
                                 <tr>
                                     <td>ROC AUC</td>
-                                    <td>Area Under the Receiver Operating Characteristic curve; measures the model's ability to discriminate between positive and negative classes</td>
-                                    <td>When you need to evaluate how well the model can distinguish between classes</td>
+                                    <td>Area Under the Receiver Operating Characteristic curve; measures the model's
+                                        ability to discriminate between positive and negative classes</td>
+                                    <td>When you need to evaluate how well the model can distinguish between classes
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

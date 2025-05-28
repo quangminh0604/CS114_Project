@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Framingham Heart Disease Risk Prediction{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -29,8 +29,8 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="/">
-                    <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" width="40" height="40" class="logo">
-                    <span class="navbar-brand-text">Heart Risk Predictor</span>
+                    <img src="{{ url_for('static', filename='img/logo2.jpg') }}" alt="Logo" width="80" height="40" class="logo">
+                    <span class="navbar-brand-text">Potential Stroke Predictor</span>
                 </a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,8 +68,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                    <h5 class="footer-title">Heart Risk Predictor</h5>
-                    <p>Our advanced machine learning algorithms help predict your risk of heart disease based on the Framingham Heart Study data.</p>
+                    <h5 class="footer-title">Potential Stroke Predictor</h5>
+                    <p>Our advanced machine learning algorithms help predict your risk of stroke based on real study data.</p>
                 </div>
                 
                 <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
@@ -86,20 +86,21 @@
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                     <h5 class="footer-title">Resources</h5>
                     <ul class="footer-links">
-                        <li><a href="https://www.heart.org/" target="_blank">American Heart Association</a></li>
-                        <li><a href="https://www.cdc.gov/heartdisease/" target="_blank">CDC - Heart Disease</a></li>
-                        <li><a href="https://www.framinghamheartstudy.org/" target="_blank">Framingham Heart Study</a></li>
+                        <li><a href="https://www.stroke.org/en/" target="_blank">American Stroke Association</a></li>
+                        <li><a href="https://www.world-stroke.org/" target="_blank">World Stroke Association</a></li>
+                        <li><a href="https://thestrokefoundation.org/" target="_blank">The Stroke Foundation</a></li>
                     </ul>
                 </div>
                 
                 <div class="col-lg-3 col-md-6">
                     <h5 class="footer-title">Disclaimer</h5>
-                    <p>This tool is for educational purposes only and should not replace professional medical advice. Always consult with a healthcare provider.</p>
+                    <p>This tool is for educational purposes only and should not replace professional medical advice. 
+                        Always consult with a healthcare provider.</p>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Heart Risk Predictor. All rights reserved.</p>
+                <p>&copy; 2025 Potential Stroke Predictor. All rights reserved.</p>
             </div>
         </div>
     </footer>

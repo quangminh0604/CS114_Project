@@ -28,10 +28,18 @@ def train_model(model, X_train, y_train, X_test, y_test, model_name):
     """Train a model and calculate performance metrics"""
     try:
         # Standardize features
-        scaler = StandardScaler()
-        X_train_scaled = scaler.fit_transform(X_train)
-        X_test_scaled = scaler.transform(X_test)
+        preprocessor_path = os.path.join(MODELS_DIR, "preprocessor.joblib")
+        scaler_path = os.path.join(MODELS_DIR, "scaler.joblib")
+            
+        preprocessor = joblib.load(preprocessor_path)
+        scaler = joblib.load(scaler_path)
+
+        X_train_scaled = preprocessor.transform(X_train)
+        X_train_scaled = scaler.transform(X_train_scaled)
         
+
+        X_test_scaled = preprocessor.transform(X_test)
+        X_test_scaled = scaler.transform(X_test_scaled)
         # Train model
         model.fit(X_train_scaled, y_train)
         
@@ -61,8 +69,9 @@ def initialize_models():
         # Try to load training data from file
         try:
             train_data = pd.read_csv('train.csv')
-            X = train_data.drop(columns=['TenYearCHD']).values
-            y = train_data['TenYearCHD'].values
+            train_data = pd.DataFrame(train_data)
+            X = train_data.drop(columns=['stroke'])
+            y = train_data['stroke']
             logger.info("Loaded training data from train.csv")
         except Exception as e:
             logger.warning(f"Could not load training data: {str(e)}. Using sample data instead.")
@@ -87,7 +96,12 @@ def predict_with_model(model_name, data, return_probability=False):
     try:
         # Load model and scaler
         model_path = os.path.join(MODELS_DIR, f"{model_name}_model.joblib")
-        scaler_path = os.path.join(MODELS_DIR, f"{model_name}_scaler.joblib")
+        preprocessor_path = os.path.join(MODELS_DIR, "preprocessor.joblib")
+        scaler_path = os.path.join(MODELS_DIR, "scaler.joblib")
+            
+        preprocessor = joblib.load(preprocessor_path)
+        scaler = joblib.load(scaler_path)
+
         
         if not os.path.exists(model_path) or not os.path.exists(scaler_path):
             raise FileNotFoundError(f"Model files for {model_name} not found")
@@ -102,7 +116,8 @@ def predict_with_model(model_name, data, return_probability=False):
             features = pd.DataFrame(data)
         
         # Scale features
-        X_scaled = scaler.transform(features)
+        X_scaled = preprocessor.transform(features)
+        X_scaled = scaler.transform(X_scaled)
         
         # Make prediction - only return predictions, not probabilities as requested
         prediction = model.predict(X_scaled)
